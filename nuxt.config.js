@@ -18,11 +18,14 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    "@/assets/css/base.scss"
+    '@/assets/scss/base.scss',
+    'element-ui/lib/theme-chalk/index.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    {src:'@/plugins/element-ui',ssr:true},
+    '~/plugins/awesome'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -35,13 +38,56 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-fontawesome'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
 
+  styleResources: {
+    // stylus: './assets/scss/scss.styl'
+    scss: './assets/scss/variables.scss'
+    // less: './assets/**/*.less'
+    // sass: ...
+  },
+
+  fontawesome: {
+    // See https://github.com/vaso2/nuxt-fontawesome
+    // 这里设置了组建的标签为fa
+    // 如果不设置，则默认为在font-awesome.js中，生成的：font-awesome-icon
+    component: 'fa',
+    imports: [
+      {
+        set: '@fortawesome/free-solid-svg-icons',
+        icons: ['fas']
+      },
+      {
+        set: '@fortawesome/free-regular-svg-icons',
+        icons: ['far']
+      },
+      {
+        set: '@fortawesome/free-brands-svg-icons',
+        icons: ['fab']
+      }
+    ]
+  },
+
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    vendor: ['element-ui'],
+    babel: {
+      plugins: [
+        [
+          'component',
+          {
+            libraryName: 'element-ui',
+            styleLibraryName: 'theme-chalk'
+          }
+        ]
+      ],
+      comments: true
+    }
   }
 }

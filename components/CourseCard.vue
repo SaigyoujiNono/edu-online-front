@@ -1,30 +1,16 @@
 <template>
-  <div class="course-card entry-anime" :style="`--et:${entryIndex}s`">
-    <div class="title-img">
-      <router-link :to="`/course/${course.id}`">
-        <img :src="course.cover" alt="">
-        <div class="mask-img">
-          <p>开始学习</p>
-        </div>
-      </router-link>
-
-    </div>
-    <div class="title">
-      <router-link :to="`/course/${course.id}`">{{course.title}}</router-link>
+  <div class="course-card">
+    <div class="cover">
+      <img src="https://mqd-online-edu.oss-cn-guangzhou.aliyuncs.com/2021/11/25/21a60aece8b540e8bfc989418f25ff05.jpeg" alt="">
+      <nuxt-link class="course-msk" to="/"><span>开始学习</span></nuxt-link>
     </div>
     <div class="info">
-      <div class="count">
-        <span><i class="fa fa-eye"></i> {{course.viewCount}}</span>
-        <span><i class="fa fa-comment" aria-hidden="true"></i> {{course.commentCount}}123</span>
-      </div>
-      <div class="price">
-        <div v-if="course.price === 0" class="free">
-          <span>免费</span>
-        </div>
-        <div v-else class="charge">
-          <span>￥{{course.price}}</span>
-        </div>
-      </div>
+      <span class="title"><nuxt-link to="/">Java基础视频教程</nuxt-link></span>
+    </div>
+    <div class="info">
+      <span class="study">1235人正在学习</span>
+      <span class="free">免费</span>
+      <span class="price">￥45.00</span>
     </div>
   </div>
 </template>
@@ -32,122 +18,79 @@
 <script>
 export default {
   name: "CourseCard",
-  props: ['course','entryIndex']
+  props:[],
+  data() {
+    return {}
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-$baseColor: rgb(85, 218, 195);
+@import '~assets/scss/variables.scss';
 .course-card{
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  margin: 10px 10px;
-  width: 380px;
-  height:320px;
-  box-shadow: 3px 3px 5px rgba(0,0,0,0.5);
-  border-radius:10px;
-  //标题头图
-  .title-img{
+  .cover{
+    height: 180px;
+    width: 320px;
     position: relative;
-    height: 220px;
-    width: 100%;
     overflow: hidden;
-    border-radius:10px;
-    img{
-      border-radius:10px;
-      width:100%;
-      height: 100%;
-      transition: 0.5s;
-    }
     &:hover{
-      .mask-img{
-        height: 100%;
+      .course-msk{
+        top: 0;
       }
       img{
-        transform: scale(1.15);
+        transform: scale(1.2);
       }
     }
-  }
-  //头图蒙版
-  .mask-img{
-    border-radius:10px;
-    transition: all 0.5s;
-    position: absolute;
-    bottom: 0;
-    height: 0;
-    width: 100%;
-    background-color: rgba(0,0,0,0.5);
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    p{
-      color: rgba(255,255,255,0.8);
-      position:relative;
-      padding: 5px 2em;
-      &::before{
-        content: "";
-        position:absolute;
-        box-sizing: border-box;
-        top: 0;
-        left: 0;
-        width:100%;
-        height: 100%;
-        border-radius:1em;
-        border: 2px solid rgba(255,255,255,0.8);;
+    .course-msk{
+      position: absolute;
+      background-color: rgba(0,0,0,0.4);
+      height: 100%;
+      width: 100%;
+      left: 0;
+      top: 100%;
+      color: $font-msk;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.5s;
+      span{
+        border: 2px solid $font-msk;
+        padding: 2px 8px;
+        border-radius: 16px;
       }
     }
-  }
-  //标题
-  .title{
-    margin-top:10px;
-    padding: 0 15px;
-    a{
-      font-size:1.4em;
+    img{
+      height:100%;
+      width: 100%;
+      transition: all 0.5s;
     }
   }
   .info{
-    flex: auto;
-    display:flex;
-    align-items: center;
-    padding: 0 15px;
-    .count{
-      width: 60%;
-      height: 100%;
-      //background-color:aqua;
-      color:rgba(0,0,0,0.65);
-      display: flex;
-      align-items: center;
-      span{
-        margin-right: 10px;
+    .title{
+      font-size: 18px;
+      color: $font-normal;
+      font-weight: 600;
+      transition: all 0.5s;
+      &:hover{
+        color: $font-hover-green;
       }
+    }
+    .study{
+      font-size: 14px;
+      line-height: 25px;
+      color: $font-hint;
+    }
+    .free{
+      float: right;
+      background-color: $font-hover-green;
+      color: $font-white;
+      padding: 2px 8px;
     }
     .price{
-      width: 40%;
-      height: 100%;
-      padding: 0 5px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      //免费时的显示效果
-      .free{
-        span{
-          background-color:$baseColor;
-          color: rgba(255,255,255,0.9);;
-          padding: 2px 8px;
-          border-radius:5px;
-        }
-      }
-      //收费显示效果
-      .charge{
-        font-size:18px;
-        color: red;
-      }
+      float: right;
+      color: $font-price;
+      padding: 2px 8px;
     }
-
   }
 }
-
 </style>

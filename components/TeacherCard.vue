@@ -1,107 +1,71 @@
 <template>
-  <div class="teacher-card entry-anime" :style="`--et:${entryIndex}s`">
-    <div class="avatar">
-      <router-link :to="`/teacher/${teacher.id}`">
-        <img :src="teacher.avatar" alt="">
-      </router-link>
-    </div>
-    <div class="title">
-      <router-link :to="`/teacher/${teacher.id}`">
-        <span class="name">{{teacher.name}}</span>
-      </router-link>
-      <div class="easy">
-        <span>{{teacher.career}}</span>
+  <div class="teacher-card shadow-hover">
+    <nuxt-link class="avatar-teacher" to="/"><img src="http://www.atguigu.com/teacher/new/tonggang.jpg" alt=""></nuxt-link>
+    <div class="introduce">
+      <h3><b><nuxt-link to="/">张老师</nuxt-link></b><span class="level">首席教师</span></h3>
+      <div class="feature">
+        <h3 class="title"><b>简&emsp;&emsp;介: </b></h3>
+        <p>
+          资深项目经理、技术讲师、SUN SCJP、SCWCD、原工信部移动云计算教育培训中心教学总监。
+          十年软件开发经验：参与完成辽宁某高校远程教学管理系统、慧文信息门户系统、日本麦卡尔超市管理系统、
+          崎玉市外来人口登记系统、深海视频会议管理系统、仙台市宫城县日常事务系统等项目的设计和开发。
+          十年软件培训经验：曾在中国AOP全球外包排名第一的公司任Java、Oracle培训讲师、负责对公司员工新技术培训；
+          曾任花旗银行特约JavaEE培训讲师；某部队研究所JavaEE培训；曾受聘为北航、厦门大学移动云计算专业教学主任，
+          并主讲Java、Android、iOS课程。
+        </p>
       </div>
-    </div>
-    <div class="intro">
-      <span>{{teacher.intro}}</span>
-
+      <div class="feature">
+        <h3 class="title"><b>一&nbsp;&nbsp;句&nbsp;&nbsp;话:</b></h3>
+        <p>
+          资深项目经理、技术讲师
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "TeacherCard",
-  props: ['teacher','entryIndex']
+  name: "TeacherCard"
 }
 </script>
 
 <style lang="scss" scoped>
-//老师卡
+@import "~assets/scss/variables.scss";
 .teacher-card{
-  position:relative;
-  width: 380px;
-  height: 450px;
-  margin: 30px 10px;
   display: flex;
-  flex-direction: column;
-  color: rgba(0, 0, 0, 0.6);
-  border-radius:5px;
-  transition: all 0.5s;
-  &:hover{
-    box-shadow: 2px 2px 5px rgba(0, 0, 0,0.5);
-  }
-  .avatar{
-    height:200px;
+  width: 100%;
+  height: 360px;
+  .avatar-teacher{
     display: flex;
-    justify-content: center;
     align-items: center;
-    &:hover img{
-      transform: rotateY(360deg);
-    }
+    padding: 16px 16px;
     img{
-      height: 180px;
-      width: 180px;
-      border-radius:50%;
-      transition: all 0.5s;
-      box-shadow: 0 0 3px rgba(0,0,0,0.3);
+      height: 330px;
+      width: 280px;
     }
   }
-  .title{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-weight: 500;
-    height:80px;
-    .name{
-      font-size:24px;
-      color: rgba(0, 0, 0, 0.8);
-      font-weight: 600;
-    }
-    .easy{
-      width: 100%;
-      font-size:18px;
-      flex: auto;
-      display: flex;
-      align-items: center;
-      span{
-        padding:0 2em;
-        overflow: hidden;
-        white-space: nowrap; // 文本超出范围强制不换行
-        text-overflow: ellipsis; //文本超出范围显示三个点
-      }
-      &:before{
-        content: "";
-        position:absolute;
-        bottom: -1em;
-        left: 10%;
-        width: 80%;
-        height: 2px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-    }
-  }
-  .intro{
+  .introduce{
+    color: $font-normal;
     flex: 1;
-    margin-top:2.2em;
-    text-indent:2em;
-    font-size:16px;
-    padding: 5px 6px;
-    box-sizing: border-box;
-    overflow: hidden;
+    padding: 16px 16px;
+    .level{
+      margin-left: 30px;
+      font-size: 16px;
+    }
+    .feature{
+      margin-top: 16px;
+      display: flex;
+      title{
+        width: 100px;
+      }
+      p{
+        flex: 1;
+        padding: 0 1em;
+        font-size: 16px;
+        line-height: 24px;
+      }
+    }
   }
 }
 </style>

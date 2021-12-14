@@ -1,10 +1,9 @@
 <template>
-  <div>
-    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-    <NavBar />
+  <el-container direction="vertical">
+    <Navbar />
     <nuxt />
     <Footer />
-  </div>
+  </el-container>
 </template>
 
 <script>

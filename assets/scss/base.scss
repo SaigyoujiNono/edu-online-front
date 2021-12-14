@@ -1,0 +1,67 @@
+@import '~assets/scss/variables.scss';
+* {
+  margin: 0;
+  padding: 0;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+li{
+  list-style: none;
+}
+
+.shadow-bottom{
+  box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+}
+
+.shadow-hover{
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  transition: box-shadow 1s;
+  &:hover{
+    box-shadow: 0 0 16px rgba(0,0,0,0.3);
+  }
+}
+
+#app-container{
+  padding: 0;
+  background-color: $background-page;
+}
+//页面常规
+.page{
+  width: 1200px;
+  margin: 0 auto;
+}
+.blank{
+  height: 100px;
+}
+//入场动画
+.entry-anime{
+  //动画
+  animation-name: entry-bottom-top-anime;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+  animation-delay: calc(var(--et) * 0.1);
+  top: 50px;
+  opacity: 0;
+}
+@keyframes entry-bottom-top-anime {
+  from {
+    opacity: 0;
+    top: 50px;
+  }
+  to {
+    opacity: 1;
+    top: 0;
+  }
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
