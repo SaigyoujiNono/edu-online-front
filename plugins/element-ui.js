@@ -1,35 +1,37 @@
 import Vue from 'vue'
 import locale from 'element-ui/lib/locale/lang/zh-CN'
 import {
-  Container,
-  Header,
   Aside,
-  Main,
-  Footer,
-  Menu,
-  MenuItem,
   Button,
   Carousel,
   CarouselItem,
+  Container,
+  Empty,
   Form,
   FormItem,
-  Input
+  Footer,
+  Header,
+  Input,
+  Main,
+  Menu,
+  MenuItem
 } from 'element-ui'
 
 const components = [
-  Container,
-  Header,
   Aside,
-  Main,
-  Footer,
-  Menu,
+  Button,
   Carousel,
   CarouselItem,
-  MenuItem,
-  Button,
+  Container,
+  Empty,
   Form,
   FormItem,
-  Input
+  Footer,
+  Header,
+  Input,
+  Main,
+  Menu,
+  MenuItem
 ];
 
 const Element = {

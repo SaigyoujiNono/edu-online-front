@@ -27,6 +27,7 @@ li{
 #app-container{
   padding: 0;
   background-color: $background-page;
+  z-index: 0;
 }
 //页面常规
 .page{

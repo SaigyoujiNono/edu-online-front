@@ -4,9 +4,9 @@
       <nuxt-link class="logo" to="/"><img src="@/static/LOGO.png" alt=""></nuxt-link>
       <ul class="menu">
         <li><nuxt-link to="/">首页</nuxt-link></li>
-        <li><nuxt-link to="">全部课程</nuxt-link></li>
-        <li><nuxt-link to="">全部教师</nuxt-link></li>
-        <li><nuxt-link to="">关于</nuxt-link></li>
+        <li><nuxt-link to="/course">全部课程</nuxt-link></li>
+        <li><nuxt-link to="/teacher">全部教师</nuxt-link></li>
+        <li><nuxt-link to="/about">关于</nuxt-link></li>
       </ul>
       <div class="search">
         <div class="search-container">
@@ -49,6 +49,8 @@ export default {
 @import '~assets/scss/variables.scss';
 .navbar{
   z-index: 1;
+  position: sticky;
+  top: 0;
   color:$font-normal;
   font-size: 16px;
   background-color: $background-header;

@@ -1,16 +1,16 @@
 <template>
   <div class="course-card">
     <div class="cover">
-      <img src="https://mqd-online-edu.oss-cn-guangzhou.aliyuncs.com/2021/11/25/21a60aece8b540e8bfc989418f25ff05.jpeg" alt="">
+      <img :src="course.cover" alt="">
       <nuxt-link class="course-msk" to="/"><span>开始学习</span></nuxt-link>
     </div>
     <div class="info">
-      <span class="title"><nuxt-link to="/">Java基础视频教程</nuxt-link></span>
+      <span class="title"><nuxt-link to="/">{{course.title}}</nuxt-link></span>
     </div>
     <div class="info">
-      <span class="study">1235人正在学习</span>
-      <span class="free">免费</span>
-      <span class="price">￥45.00</span>
+      <span class="study">{{course.viewCount}}人正在学习</span>
+      <span v-if="course.price <= 0" class="free">免费</span>
+      <span v-else class="price">￥{{course.price}}</span>
     </div>
   </div>
 </template>
@@ -18,7 +18,7 @@
 <script>
 export default {
   name: "CourseCard",
-  props:[],
+  props:['course'],
   data() {
     return {}
   }

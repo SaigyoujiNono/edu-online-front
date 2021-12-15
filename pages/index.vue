@@ -1,42 +1,29 @@
 <template>
   <el-main id="app-container">
-    <div class="carousel">
+    <div v-if="carouselList && carouselList.length!==0" class="carousel">
       <el-carousel trigger="click" height="600px">
-        <el-carousel-item v-for="(item,index) in carouselList" :key="index">
-          <nuxt-link :to="item.url">
-            <img height="100%" width="100%" :src="item.cover" alt="">
+        <el-carousel-item v-for="item in carouselList" :key="item.id">
+          <nuxt-link :to="item.linkUrl">
+            <img height="100%" width="100%" :src="item.imageUrl" :alt="item.title">
           </nuxt-link>
         </el-carousel-item>
       </el-carousel>
     </div>
     <div class="page">
       <div class="hot-container">
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
-        <CourseCard />
+        <el-empty v-if="!courseList || courseList.length === 0" :image-size="200"></el-empty>
+        <CourseCard v-for="item in courseList" :course="item" />
       </div>
       <div class="gap-btn">
-        <nuxt-link to="" class="all-btn">全部课程</nuxt-link>
+        <nuxt-link to="/course" class="all-btn">全部课程</nuxt-link>
       </div>
       <div class="blank"></div>
       <div class="hot-container">
-        <TeacherCard />
-        <TeacherCard />
-        <TeacherCard />
-        <TeacherCard />
-        <TeacherCard />
-        <TeacherCard />
-        <TeacherCard />
-        <TeacherCard />
+        <el-empty v-if="!teacherList || teacherList.length === 0" :image-size="200"></el-empty>
+        <TeacherCard v-for="item in teacherList" :teacher="item" />
       </div>
       <div class="gap-btn">
-        <nuxt-link to="" class="all-btn">全部教师</nuxt-link>
+        <nuxt-link to="/teacher" class="all-btn">全部教师</nuxt-link>
       </div>
     </div>
   </el-main>
@@ -44,30 +31,29 @@
 
 <script>
 
+import {getBanner, getHotCourseAndTeacher} from "@/api";
+
 export default {
   data() {
     return {
-      carouselList:[
-        {
-          cover:'https://www.gulixueyuan.com/files/system/2021/12-08/0925244d224e170553.jpg?version=20.4.6',
-          url:'/'
-        },
-        {
-          cover:'https://www.gulixueyuan.com/files/system/2021/11-24/09261357e2cd981244.jpg?version=20.4.6',
-          url:'/'
-        },
-        {
-          cover:'https://www.gulixueyuan.com/files/system/2021/11-17/0943517b9c28919881.jpg?version=20.4.6',
-          url:'/'
-        },
-        {
-          cover:'https://www.gulixueyuan.com/files/system/2021/11-10/15054598065e088970.jpg?version=20.4.6',
-          url:'/'
-        }
-      ]
+      courseList:[],
+      teacherList:[]
     }
   },
-  async asyncData({app}) {
+  async asyncData() {
+    let carouselList = await getBanner().then(res=>{
+      return res.data.bannerList
+    }).catch(err=>{
+      console.error(err)
+      return []
+    })
+    return {carouselList}
+  },
+  mounted() {
+    getHotCourseAndTeacher().then(res =>{
+      this.courseList = res.data.hotCourse
+      this.teacherList = res.data.hotTeacher
+    })
   }
 }
 </script>

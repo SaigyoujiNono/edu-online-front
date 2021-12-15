@@ -39,11 +39,20 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    'nuxt-fontawesome'
+    'nuxt-fontawesome',
+    '@nuxtjs/proxy'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    proxy:true
+  },
+  proxy: {
+    '/api':{
+      changeOrigin:true,
+      target: 'http://127.0.0.1'
+    }
+  },
 
   styleResources: {
     // stylus: './assets/scss/scss.styl'
