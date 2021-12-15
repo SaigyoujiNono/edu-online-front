@@ -1,6 +1,6 @@
 <template>
   <div class="course-card">
-    <div class="cover">
+    <div class="cover" :class="size?'size-'+size:'size-lg'">
       <img :src="course.cover" alt="">
       <nuxt-link class="course-msk" to="/"><span>开始学习</span></nuxt-link>
     </div>
@@ -18,7 +18,7 @@
 <script>
 export default {
   name: "CourseCard",
-  props:['course'],
+  props:['course','size'],
   data() {
     return {}
   }
@@ -28,9 +28,15 @@ export default {
 <style lang="scss" scoped>
 @import '~assets/scss/variables.scss';
 .course-card{
-  .cover{
+  .size-lg{
     height: 180px;
     width: 320px;
+  }
+  .size-sm{
+    height: 160px;
+    width: 280px;
+  }
+  .cover{
     position: relative;
     overflow: hidden;
     &:hover{

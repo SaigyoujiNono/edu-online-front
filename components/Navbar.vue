@@ -15,13 +15,16 @@
         </div>
       </div>
       <ul class="user-info">
-        <li>
+        <li v-if="isLogin">
           <nuxt-link to="/">
             <img src="https://www.dazhuanlan.com/system/letter_avatars/n.png" alt="">
           </nuxt-link>
         </li>
-        <li>
+        <li v-if="isLogin">
           <nuxt-link class="username" to="/">SaigyoujiNono</nuxt-link>
+        </li>
+        <li v-if="!isLogin">
+          <nuxt-link class="username" to="/login">登录/注册</nuxt-link>
         </li>
       </ul>
     </div>
@@ -35,7 +38,8 @@ export default {
   data(){
     return{
       itemsList:[],
-      searchContent: ''
+      searchContent: '',
+      isLogin:false
     }
   },
   methods: {

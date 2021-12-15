@@ -2,7 +2,7 @@
   <div class="teacher-card shadow-hover">
     <nuxt-link class="avatar-teacher" to="/"><img :src="teacher.avatar" alt=""></nuxt-link>
     <div class="introduce">
-      <h3><b><nuxt-link to="/">{{teacher.name}}</nuxt-link></b><span class="level">{{level === 1 ?'高级讲师':'首席讲师'}}</span></h3>
+      <h3><b><nuxt-link to="/">{{teacher.name}}</nuxt-link></b><span class="level">{{teacher.level === 1 ?'高级讲师':'首席讲师'}}</span></h3>
       <div class="feature">
         <h3 class="title"><b>简&emsp;&emsp;介: </b></h3>
         <p>
@@ -31,7 +31,7 @@ export default {
 .teacher-card{
   display: flex;
   width: 100%;
-  height: 360px;
+  min-height: 360px;
   .avatar-teacher{
     display: flex;
     align-items: center;

@@ -14,7 +14,8 @@ import {
   Input,
   Main,
   Menu,
-  MenuItem
+  MenuItem,
+  Pagination
 } from 'element-ui'
 
 const components = [
@@ -31,7 +32,8 @@ const components = [
   Input,
   Main,
   Menu,
-  MenuItem
+  MenuItem,
+  Pagination
 ];
 
 const Element = {

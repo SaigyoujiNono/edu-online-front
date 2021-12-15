@@ -12,7 +12,7 @@
     <div class="page">
       <div class="hot-container">
         <el-empty v-if="!courseList || courseList.length === 0" :image-size="200"></el-empty>
-        <CourseCard v-for="item in courseList" :course="item" />
+        <CourseCard v-for="item in courseList" :course="item" :key="item.id"/>
       </div>
       <div class="gap-btn">
         <nuxt-link to="/course" class="all-btn">全部课程</nuxt-link>
@@ -20,7 +20,7 @@
       <div class="blank"></div>
       <div class="hot-container">
         <el-empty v-if="!teacherList || teacherList.length === 0" :image-size="200"></el-empty>
-        <TeacherCard v-for="item in teacherList" :teacher="item" />
+        <TeacherCard v-for="item in teacherList" :teacher="item" :key="item.id"/>
       </div>
       <div class="gap-btn">
         <nuxt-link to="/teacher" class="all-btn">全部教师</nuxt-link>
