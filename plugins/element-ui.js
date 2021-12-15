@@ -15,6 +15,7 @@ import {
   Main,
   Menu,
   MenuItem,
+  Notification,
   Pagination
 } from 'element-ui'
 
@@ -33,6 +34,7 @@ const components = [
   Main,
   Menu,
   MenuItem,
+  Notification,
   Pagination
 ];
 
@@ -41,6 +43,7 @@ const Element = {
     components.forEach(component => {
       Vue.component(component.name, component)
     })
+    Vue.prototype.$notify = Notification
   }
 }
 Vue.use(Element,{locale})
