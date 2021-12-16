@@ -23,7 +23,8 @@
         background
         layout="prev, pager, next"
         @current-change="handleCurrentChange"
-        :total="pageInfo.total">
+        :total="pageInfo.total"
+        :page-size="pageInfo.size">
       </el-pagination>
     </div>
   </el-main>
@@ -175,11 +176,5 @@ a{
     margin-right: 20px;
     margin-bottom: 18px;
   }
-}
-.pagination-container{
-  margin-top: 24px;
-  margin-bottom: 24px;
-  display: flex;
-  justify-content: center;
 }
 </style>

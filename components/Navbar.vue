@@ -10,8 +10,8 @@
       </ul>
       <div class="search">
         <div class="search-container">
-          <input class="search-input" type="text" v-model="searchContent" placeholder="请输入搜索内容">
-          <fa class="search-icon" :icon="['fas', 'search']" />
+          <input class="search-input" type="text" v-model="searchContent" @keydown.enter="searchHandler()" placeholder="请输入搜索内容">
+          <fa class="search-icon" :icon="['fas', 'search']" @click="searchHandler()"/>
         </div>
       </div>
       <ul class="user-info">
@@ -37,7 +37,6 @@
 
 <script>
 import cookie from 'js-cookie'
-import {getUserInfo} from "@/api/login";
 export default {
   name: "Navbar",
   data(){
@@ -47,17 +46,24 @@ export default {
     }
   },
   methods: {
+    //登出
     logout(){
       cookie.set('auth-token','')
       this.$store.commit('logoutUser')
+    },
+    //搜索
+    searchHandler(){
+      console.log('search')
     }
   },
   computed:{
+    //是否登录
     isLogin(){
       if (this.$store.state.userInfo){
         return true
       }
     },
+    //用户名
     userName(){
       if (this.$store.state.userInfo.nickname){
         return this.$store.state.userInfo.nickname
@@ -69,13 +75,14 @@ export default {
         return this.$store.state.userInfo.email
       }
     },
+    //头像
     avatar(){
       return this.$store.userInfo && this.$store.userInfo.avatar?this.$store.userInfo.avatar:'https://www.dazhuanlan.com/system/letter_avatars/n.png'
     }
   },
   mounted() {
+    //第一次加载获取用户信息
     const token = this.$store.userToken
-    console.log(token)
     if (token != null && token !==''){
       this.$store.dispatch('loginUser',token)
     }else{
@@ -135,13 +142,14 @@ export default {
         display: flex;
         align-items: center;
         .search-input{
+          box-sizing: border-box;
           width: 240px;
           height: 40px;
           outline: none;
           border: none;
           font-size: inherit;
           color: inherit;
-          padding: 0 0.5em;
+          padding: 0 1.5em 0 0.5em;
           &::placeholder {
             color: $font-hint;
           }

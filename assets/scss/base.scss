@@ -29,9 +29,17 @@ li{
   background-color: $background-page;
   z-index: 0;
 }
+//内容区域
 .content-container{
   width: 1200px;
   margin: 0 auto;
+}
+//分页设置
+.pagination-container{
+  margin-top: 24px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: center;
 }
 //页面常规
 .page{

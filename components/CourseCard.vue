@@ -2,10 +2,10 @@
   <div class="course-card">
     <div class="cover" :class="size?'size-'+size:'size-lg'">
       <img :src="course.cover" alt="">
-      <nuxt-link class="course-msk" to="/"><span>开始学习</span></nuxt-link>
+      <nuxt-link class="course-msk" :to="`/course/${course.id}`"><span>开始学习</span></nuxt-link>
     </div>
     <div class="info">
-      <span class="title"><nuxt-link to="/">{{course.title}}</nuxt-link></span>
+      <span class="title"><nuxt-link :to="`/course/${course.id}`" >{{course.title}}</nuxt-link></span>
     </div>
     <div class="info">
       <span class="study">{{course.viewCount}}人正在学习</span>

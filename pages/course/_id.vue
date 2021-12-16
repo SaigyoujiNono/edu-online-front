@@ -1,13 +1,28 @@
 <template>
-  <div>课程详情</div>
+  <el-main id="app-container">
+    <div class="content-container course-container">
+      课程详情
+    </div>
+  </el-main>
 </template>
 
 <script>
 export default {
-  name: "_id"
+  name: "course_id",
+  data(){
+    return {}
+  },
+  async asyncData(){
+
+  }
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.course-container{
+  margin:{
+    top:20px;
+    bottom: 20px;
+  }
+}
 </style>

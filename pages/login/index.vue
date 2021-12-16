@@ -7,7 +7,7 @@
           <span @click="isLogin=true" :class="isLogin?'active':''">登录</span>
           <span @click="isLogin=false" :class="!isLogin?'active':''">注册</span>
         </div>
-        <div v-if="isLogin" class="login-form">
+        <form v-if="isLogin" class="login-form">
           <div class="form-input">
             <label for="username">账号</label>
             <input id="username" type="text" v-model="loginForm.username" placeholder="请输入手机号/邮箱"/>
@@ -16,8 +16,8 @@
             <label for="password">密码</label>
             <input id="password" type="password" v-model="loginForm.password" placeholder="请输入密码"/>
           </div>
-        </div>
-        <div v-if="!isLogin" class="login-form">
+        </form>
+        <form v-if="!isLogin" class="login-form">
           <div class="form-input">
             <label for="email">邮箱</label>
             <input id="email" type="text" v-model="registerForm.email" placeholder="请输入邮箱"/>
@@ -35,11 +35,14 @@
           <input id="validateCode" type="text" v-model="registerForm.validateCode" placeholder="输入验证码"/>
           <input @click="sendValid()" v-if="!isLogin" type="button" class="send-valid" :value="validTip"/>
         </div>
-        </div>
+        </form>
         <div class="btn-container">
           <el-button @click="loginHandler()" v-if="isLogin" :loading="btnLoading" class="btn-handler" type="button">登录</el-button>
           <el-button v-if="isLogin" class="btn-handler" type="button">
             <fa :icon="['fab', 'weixin']" />
+          </el-button>
+          <el-button v-if="isLogin" class="btn-handler" @click="githubLogin()" type="button">
+            <fa :icon="['fab', 'github']" />
           </el-button>
           <el-button @click="registerHandler()" v-if="!isLogin" :loading="btnLoading" class="btn-handler" type="button" >注册</el-button>
         </div>
@@ -97,6 +100,15 @@ export default {
     },
     //登录
     loginHandler(){
+      //登录之前先判断自身是否存在cookie
+      const token = cookie.get('auth-token')
+      if (token && token !== ''){
+        getUserInfo(token).then(()=>{
+          this.$notify.info('您当前已登录')
+          this.$router.push('/')
+        })
+      }
+      //登录逻辑
       const {username,password}= this.loginForm
       if (username === '' || password === ''){
         this.$notify.error('请输入账户和密码')
@@ -132,6 +144,13 @@ export default {
       }).finally(()=>{
         this.btnLoading = false
       })
+    },
+    //github授权登录
+    githubLogin(){
+      console.log('aa')
+      const loginOauth = window.open(`https://github.com/login/oauth/authorize?client_id=d7c294d2a06425959292&
+  redirect_uri=http://localhost:3000/oauth/redirect`,'_self')
+      loginOauth.focus()
     }
   },
   mounted() {
