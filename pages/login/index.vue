@@ -19,8 +19,8 @@
         </div>
         <div v-if="!isLogin" class="login-form">
           <div class="form-input">
-            <label for="username">邮箱</label>
-            <input id="username" type="text" v-model="registerForm.username" placeholder="请输入邮箱"/>
+            <label for="email">邮箱</label>
+            <input id="email" type="text" v-model="registerForm.email" placeholder="请输入邮箱"/>
           </div>
           <div class="form-input">
             <label for="password">密码</label>
@@ -37,8 +37,11 @@
         </div>
         </div>
         <div class="btn-container">
-          <input v-if="isLogin" type="button" value="登录">
-          <input v-if="!isLogin" type="button" value="注册">
+          <el-button @click="loginHandler()" v-if="isLogin" :loading="btnLoading" class="btn-handler" type="button">登录</el-button>
+          <el-button v-if="isLogin" class="btn-handler" type="button">
+            <fa :icon="['fab', 'weixin']" />
+          </el-button>
+          <el-button @click="registerHandler()" v-if="!isLogin" :loading="btnLoading" class="btn-handler" type="button" >注册</el-button>
         </div>
       </div>
     </div>
@@ -46,17 +49,20 @@
 </template>
 
 <script>
+import {getUserInfo, login, register, sendValid} from "@/api/login";
+import cookie from 'js-cookie'
 export default {
   name: "index",
   data() {
     return {
+      btnLoading:false,
       isLogin: true,
       loginForm: {
         username: '',
         password: ''
       },
       registerForm: {
-        username: '',
+        email: '',
         password: '',
         confirmPassword: '',
         validateCode: ''
@@ -68,21 +74,79 @@ export default {
   methods: {
     //发送验证码
     sendValid(){
+      if (this.registerForm.email === '' || !new RegExp("[\\w!#$%&'*+/=?^_`{|}~-]+(?:\\.[\\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\\w](?:[\\w-]*[\\w])?\\.)+[\\w](?:[\\w-]*[\\w])?").exec(this.registerForm.email)){
+        this.$notify.error('请输入邮箱或者邮箱格式不正确')
+        return
+      }
       if (this.validTimer === null){
-        this.validTip = 60
-        this.validTimer = setInterval(()=>{
-          this.validTip--
-          if (this.validTip<=0){
-            clearInterval(this.validTimer)
-            this.validTimer = null
-          }
-        },1000)
+        sendValid(this.registerForm.email).then(res=>{
+          this.validTip = 60
+          this.validTimer = setInterval(()=>{
+            this.validTip--
+            if (this.validTip<=0){
+              clearInterval(this.validTimer)
+              this.validTimer = null
+            }
+          },1000)
+        }).catch(err=>{
+          this.$notify.error(err)
+        })
       }else{
         this.$notify.error('请稍稍再发送验证码')
       }
+    },
+    //登录
+    loginHandler(){
+      const {username,password}= this.loginForm
+      if (username === '' || password === ''){
+        this.$notify.error('请输入账户和密码')
+        return
+      }
+      this.btnLoading = true
+      login(this.loginForm).then(res=>{
+        cookie.set('auth-token',res.data.token)
+        this.$store.dispatch('loginUser',res.data.token)
+        this.$notify.info('登录成功')
+        this.$router.push('/')
+      }).catch(err=>{
+        this.$notify.error(err)
+      }).finally(()=>{
+        this.btnLoading = false
+      })
+    },
+    //注册
+    registerHandler(){
+      const {email,password,confirmPassword,validateCode}= this.registerForm
+      if (email === '' || password === '' || confirmPassword === '' || validateCode ===''){
+        this.$notify.error('请输入账户、密码以及验证码')
+        return
+      }
+      this.btnLoading = true
+      register(this.registerForm).then(res=>{
+        cookie.set('auth-token',res.data.token)
+        this.$store.dispatch('loginUser',res.data.token)
+        this.$notify.info('注册成功')
+        this.$router.push('/')
+      }).catch(err=>{
+        this.$notify.error(err)
+      }).finally(()=>{
+        this.btnLoading = false
+      })
     }
   },
   mounted() {
+  },
+  beforeRouteEnter(to,from,next){
+    next(vm=>{
+      const token = cookie.get('auth-token')
+      if (token || token !== ''){
+        getUserInfo(token).then(res=>{
+          vm.$router.push('/')
+        }).catch(err=>{
+          console.log('登录失效')
+        })
+      }
+    })
   }
 }
 </script>
@@ -165,7 +229,7 @@ export default {
       margin: 18px 0;
       display: flex;
       justify-content: center;
-      input[type=button]{
+      .btn-handler{
         font-size: 18px;
         border-radius: 8px;
         padding: 8px 16px;

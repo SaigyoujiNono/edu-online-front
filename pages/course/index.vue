@@ -173,6 +173,7 @@ a{
   margin-top: 24px;
   .course-card{
     margin-right: 20px;
+    margin-bottom: 18px;
   }
 }
 .pagination-container{

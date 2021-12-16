@@ -17,11 +17,14 @@
       <ul class="user-info">
         <li v-if="isLogin">
           <nuxt-link to="/">
-            <img src="https://www.dazhuanlan.com/system/letter_avatars/n.png" alt="">
+            <img :src="avatar" alt="">
           </nuxt-link>
         </li>
         <li v-if="isLogin">
-          <nuxt-link class="username" to="/">SaigyoujiNono</nuxt-link>
+          <nuxt-link class="username" to="/">{{userName}}</nuxt-link>
+        </li>
+        <li v-if="isLogin">
+          <a class="username" @click="logout()" href="javascript:void(0);">登出</a>
         </li>
         <li v-if="!isLogin">
           <nuxt-link class="username" to="/login">登录/注册</nuxt-link>
@@ -33,18 +36,55 @@
 </template>
 
 <script>
+import cookie from 'js-cookie'
+import {getUserInfo} from "@/api/login";
 export default {
   name: "Navbar",
   data(){
     return{
       itemsList:[],
-      searchContent: '',
-      isLogin:false
+      searchContent: ''
     }
   },
   methods: {
+    logout(){
+      cookie.set('auth-token','')
+      this.$store.commit('logoutUser')
+    }
+  },
+  computed:{
+    isLogin(){
+      if (this.$store.state.userInfo){
+        return true
+      }
+    },
+    userName(){
+      if (this.$store.state.userInfo.nickname){
+        return this.$store.state.userInfo.nickname
+      }
+      if (this.$store.state.userInfo.mobile){
+        return this.$store.state.userInfo.mobile
+      }
+      if (this.$store.state.userInfo.email){
+        return this.$store.state.userInfo.email
+      }
+    },
+    avatar(){
+      return this.$store.userInfo && this.$store.userInfo.avatar?this.$store.userInfo.avatar:'https://www.dazhuanlan.com/system/letter_avatars/n.png'
+    }
   },
   mounted() {
+    const token = this.$store.userToken
+    console.log(token)
+    if (token != null && token !==''){
+      this.$store.dispatch('loginUser',token)
+    }else{
+      const cookieToken = cookie.get('auth-token')
+      if (cookieToken && cookieToken!==''){
+        this.$store.dispatch('loginUser',cookieToken)
+      }
+    }
+
   }
 }
 </script>

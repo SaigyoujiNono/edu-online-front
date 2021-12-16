@@ -6,8 +6,13 @@ const service = axios.create({
 })
 
 service.interceptors.response.use(
+
   function (response) {
-    return response.data
+    const res = response.data
+    if (res.code !== 20000){
+      return Promise.reject(new Error(res.message || 'Error'))
+    }
+    return res
   },
   function (error) {
     return Promise.reject(error)
