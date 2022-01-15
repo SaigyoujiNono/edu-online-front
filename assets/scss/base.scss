@@ -23,7 +23,11 @@ li{
     box-shadow: 0 0 16px rgba(0,0,0,0.3);
   }
 }
-
+.icon-free{
+  background-color: $font-hover-green;
+  color: $font-white;
+  padding: 2px 8px;
+}
 #app-container{
   padding: 0;
   background-color: $background-page;

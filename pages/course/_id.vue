@@ -36,6 +36,14 @@
         </ul>
         <div v-if="courseTab === 0" class="course-desc" v-html="courseDesc">
         </div>
+        <ul v-if="courseTab === 1" class="course-list">
+            <li v-for="chapter in courseChapter">
+              <p class="course-chapter">{{chapter.title}}</p>
+              <ul class="video-list">
+                <li v-for="video in chapter.children"><nuxt-link class="course-video" to="/"><fa :icon="['far', 'circle']"/>&emsp;<span v-if="video.isFree === true" class="icon-free">免费</span>&emsp;{{video.title}}</nuxt-link></li>
+              </ul>
+            </li>
+        </ul>
       </div>
       <div class="course-teacher shadow-hover">
         <ul class="select-tab">
@@ -53,19 +61,31 @@
 </template>
 
 <script>
-import {getCourse, getCourseDesc} from "@/api/course";
+import {getCourse, getCourseChapter, getCourseDesc} from "@/api/course";
 import {getTeacher} from "@/api/teacher";
 
 export default {
   name: "course_id",
+  head(){
+    return this.$seo(this.course.title, this.course.title)
+  },
   data(){
     return {
       courseTab: 0,
       teacher:{},
-      courseDesc: ''
+      courseDesc: '',
+      courseChapter: []
     }
   },
   watch:{
+    courseTab(){
+      if (this.courseChapter.length === 0){
+        //获取课程章节
+        getCourseChapter({id:this.course.id}).then(res=>{
+          this.courseChapter = res.data.courseChapter
+        })
+      }
+    }
   },
   computed:{
     teacherLevel(){
@@ -80,11 +100,13 @@ export default {
   },
   mounted() {
     const id = this.course.teacherId
+    //获取课程教师信息
     getTeacher({id}).then(res=>{
       this.teacher = res.data.teacher
     }).catch(err=>{
       this.$notify.error(err)
     })
+    //获取课程描述
     getCourseDesc({id:this.course.id}).then(res=>{
       this.courseDesc = res.data.courseDesc.description
     }).catch(err=>{
@@ -282,6 +304,39 @@ export default {
         top: 2em;
         bottom: 2em;
       };
+    }
+    .course-list{
+      color: $font-list;
+      padding: {
+        left: 1em;
+        right: 1em;
+        top: 2em;
+        bottom: 2em;
+      };
+      .course-chapter,.course-video{
+        cursor: pointer;
+        border: 1px solid rgba(0,0,0,0.3);
+        margin-bottom: 2px;
+        padding: {
+          left: 1em;
+          right: 1em;
+          top: 0.7em;
+          bottom: 0.7em;
+        };
+        border-radius: 4px;
+      }
+      .course-chapter{
+        background-color: #efefef;
+      }
+      .course-video{
+        display: block;
+        margin-left: 2em;
+        background-color: #ffffff;
+        &:hover{
+          color: $font-hover-green;
+          background-color: $background-default;
+        }
+      }
     }
   }
   .course-teacher{

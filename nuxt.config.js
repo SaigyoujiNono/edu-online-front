@@ -1,14 +1,14 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'edu-online-user',
+    title: '在线教育',
     htmlAttrs: {
       lang: 'en'
     },
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: '个人制作的在线视频教育系统(练手)' },
       { name: 'format-detection', content: 'telephone=no' }
     ],
     link: [
@@ -25,7 +25,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     {src:'@/plugins/element-ui',ssr:true},
-    '~/plugins/awesome'
+    '~/plugins/awesome',
+    '~/plugins/mixins'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

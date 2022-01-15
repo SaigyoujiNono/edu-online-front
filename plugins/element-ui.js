@@ -16,7 +16,10 @@ import {
   Menu,
   MenuItem,
   Notification,
-  Pagination
+  Pagination,
+  Radio,
+  RadioGroup,
+  Upload, Col, Row
 } from 'element-ui'
 
 const components = [
@@ -25,6 +28,7 @@ const components = [
   Carousel,
   CarouselItem,
   Container,
+  Col,
   Empty,
   Form,
   FormItem,
@@ -35,7 +39,11 @@ const components = [
   Menu,
   MenuItem,
   Notification,
-  Pagination
+  Pagination,
+  Radio,
+  RadioGroup,
+  Upload,
+  Row
 ];
 
 const Element = {

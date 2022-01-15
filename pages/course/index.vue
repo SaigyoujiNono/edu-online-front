@@ -36,6 +36,9 @@ import {getCourse} from "@/api/course";
 
 export default {
   name: "course",
+  head(){
+    return this.$seo('全部课程', '全部课程')
+  },
   data(){
     return {
       courseList:[],

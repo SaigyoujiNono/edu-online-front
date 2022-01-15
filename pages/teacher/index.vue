@@ -22,6 +22,9 @@ import {getTeacher} from "@/api/teacher";
 
 export default {
   name: "teacher",
+  head(){
+    return this.$seo('全部教师', '全部教师')
+  },
   data(){
     return {
       pageInfo:{},

@@ -7,15 +7,10 @@ Vue.use(Vuex)
 
 const store = ()=>new Vuex.Store({
   state:{
-    userToken: null,
     userInfo: null,
   },
   mutations: {
-    loginUser(state,token){
-      state.userToken = token
-    },
     logoutUser(state){
-      state.userToken = null
       state.userInfo = null
     },
     getUserInfo(state,info){
@@ -24,12 +19,10 @@ const store = ()=>new Vuex.Store({
   },
   actions:{
     loginUser({commit},token){
-      console.log('登录')
-      commit('loginUser',token)
       getUserInfo(token).then(res=>{
         commit('getUserInfo',res.data.userInfo)
       }).catch(err=>{
-        commit('logoutUser',token)
+        commit('logoutUser')
         cookie.set('auth-token','')
       })
     }

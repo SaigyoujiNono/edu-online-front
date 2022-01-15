@@ -16,12 +16,12 @@
       </div>
       <ul class="user-info">
         <li v-if="isLogin">
-          <nuxt-link to="/">
+          <nuxt-link to="/my">
             <img :src="avatar" alt="">
           </nuxt-link>
         </li>
         <li v-if="isLogin">
-          <nuxt-link class="username" to="/">{{userName}}</nuxt-link>
+          <nuxt-link class="username" to="/my">{{userName}}</nuxt-link>
         </li>
         <li v-if="isLogin">
           <a class="username" @click="logout()" href="javascript:void(0);">登出</a>
@@ -39,6 +39,9 @@
 import cookie from 'js-cookie'
 export default {
   name: "Navbar",
+  head:{
+    title:'我的-在线教育'
+  },
   data(){
     return{
       itemsList:[],
@@ -65,6 +68,7 @@ export default {
     },
     //用户名
     userName(){
+      console.log('username')
       if (this.$store.state.userInfo.nickname){
         return this.$store.state.userInfo.nickname
       }
@@ -77,21 +81,19 @@ export default {
     },
     //头像
     avatar(){
-      return this.$store.userInfo && this.$store.userInfo.avatar?this.$store.userInfo.avatar:'https://www.dazhuanlan.com/system/letter_avatars/n.png'
+      if (this.$store.state.userInfo.avatar){
+        return this.$store.state.userInfo.avatar
+      }else {
+        return 'https://www.dazhuanlan.com/system/letter_avatars/n.png'
+      }
     }
   },
   mounted() {
     //第一次加载获取用户信息
-    const token = this.$store.userToken
-    if (token != null && token !==''){
+    const token = cookie.get('auth-token')
+    if (token && token !==''){
       this.$store.dispatch('loginUser',token)
-    }else{
-      const cookieToken = cookie.get('auth-token')
-      if (cookieToken && cookieToken!==''){
-        this.$store.dispatch('loginUser',cookieToken)
-      }
     }
-
   }
 }
 </script>

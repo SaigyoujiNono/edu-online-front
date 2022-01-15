@@ -18,3 +18,12 @@ export function getCourseDesc(params) {
     params
   })
 }
+
+//获取课程所有章节信息
+export function getCourseChapter(params) {
+  return request({
+    url: '/edu/service/coursechapter',
+    method: 'get',
+    params
+  })
+}
