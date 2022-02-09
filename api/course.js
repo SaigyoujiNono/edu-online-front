@@ -19,11 +19,17 @@ export function getCourseDesc(params) {
   })
 }
 
-//获取课程所有章节信息
-export function getCourseChapter(params) {
+//获取课程信息与描述与课程老师信息
+export function getCourseInfo(params){
   return request({
-    url: '/edu/service/coursechapter',
-    method: 'get',
-    params
+    url: '/edu/service/course/'+params,
+    method:'get'
+  })
+}
+
+export function getCurrentVideoPlayAuth(params){
+  return request({
+    url: '/vod/video/'+params,
+    method:'get'
   })
 }

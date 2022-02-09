@@ -88,6 +88,7 @@ export default {
             this.validTip--
             if (this.validTip<=0){
               clearInterval(this.validTimer)
+              this.validTip = "发送验证码"
               this.validTimer = null
             }
           },1000)
@@ -171,7 +172,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~assets/scss/variables.scss";
+@import "/assets/scss/variables.scss";
 .login-box{
   width: 1200px;
   margin: 0 auto;

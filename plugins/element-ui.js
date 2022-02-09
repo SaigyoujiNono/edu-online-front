@@ -19,7 +19,8 @@ import {
   Pagination,
   Radio,
   RadioGroup,
-  Upload, Col, Row
+  Upload, Col, Row,Tabs,TabPane,Card,Collapse,
+  CollapseItem
 } from 'element-ui'
 
 const components = [
@@ -43,7 +44,12 @@ const components = [
   Radio,
   RadioGroup,
   Upload,
-  Row
+  Row,
+  Tabs,
+  TabPane,
+  Card,
+  Collapse,
+  CollapseItem
 ];
 
 const Element = {
